@@ -73,6 +73,23 @@ add to `ios/App/App/Info.plist`:
 <string>Connects to the Nova S Pro robot over Bluetooth.</string>
 ```
 
+### Android only: Bluetooth permissions
+
+Android apps (especially on Android 12+) require explicit permissions in the `AndroidManifest.xml` file to scan for and connect to BLE devices.
+
+Open `android/app/src/main/AndroidManifest.xml` and add the following permissions inside the `<manifest>` tag:
+
+```xml
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+```
+
+*Note: The `neverForLocation` flag tells Android that the app only scans for devices and does not use Bluetooth to determine the user's physical location, which removes the mandatory requirement for location access permissions.*
+
 ## Re-syncing after web changes
 
 Whenever you change the web app (`index.html`, `js/`, `css/`), re-run the
